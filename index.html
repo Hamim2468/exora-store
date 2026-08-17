@@ -24,6 +24,8 @@
 .drawer{position:fixed;z-index:100;right:-440px;top:0;height:100vh;width:min(440px,100%);background:#101010;border-left:1px solid #292929;padding:28px;transition:.3s;display:flex;flex-direction:column}.drawer.open{right:0}.drawerhead{display:flex;justify-content:space-between;align-items:center}.drawer h2{font-size:17px;letter-spacing:.12em}.close{background:none;border:0;color:white;font-size:26px}.cart{overflow:auto;flex:1;margin:25px 0}.cartrow{padding:16px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}.cartrow small{color:#888}.remove{background:none;border:0;color:#888;font-size:11px;padding:0;margin-top:6px}.total{border-top:1px solid var(--line);padding-top:17px}.line{display:flex;justify-content:space-between;margin:9px 0}.empty{text-align:center;color:#666;padding:90px 0}
 .modal{display:none;position:fixed;z-index:120;inset:0;background:#000c;padding:18px;place-items:center}.modal.show{display:grid}.box{background:#111;border:1px solid #303030;width:min(650px,100%);max-height:92vh;overflow:auto;padding:28px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin:7px 0}.field.full{grid-column:1/-1}.field label{display:block;font-size:9px;color:#999;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;background:#080808;color:white;border:1px solid #333;outline:none}.pay{border:1px solid #292929;padding:14px;margin:14px 0}.pay label{display:block;font-size:12px;margin:9px 0}.notice{padding:12px;background:#0a0a0a;border:1px solid #222;color:#999;font-size:12px}.hidden{display:none}
 
+.size-options{display:flex;gap:12px;margin:20px 0}.size-btn{flex:1;padding:14px;background:#0d0d0d;border:1px solid #333;color:white;font-weight:bold;font-size:14px;transition:.2s}.size-btn:hover{border-color:var(--gold);background:#181818}
+
 /* EXORA scroll reveal animations */
 .reveal{opacity:0;transform:translateY(42px);transition:opacity .85s cubic-bezier(.22,.61,.36,1),transform .85s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
 .reveal.from-left{transform:translateX(-70px)}
@@ -84,14 +86,14 @@
 </section>
 
 <section class="feature" id="story">
-<div class="feature-copy reveal from-left"><div class="eyebrow">02 / THE DROP</div><h2>YOUR<br>EVERYDAY.<br>UPGRADED.</h2><p>Three clean Drop Shoulder colours and two statement Acid Wash pieces. Every current piece is available in S, M and L.</p><a class="btn" href="#shop">Shop now</a></div>
+<div class="feature-copy reveal from-left"><div class="eyebrow">02 / THE DROP</div><h2>YOUR<br>EVERYDAY.<br>UPGRADED.</h2><p>Three clean Drop Shoulder colours and two statement Acid Wash pieces. Every current piece is available in M, L and XL.</p><a class="btn" href="#shop">Shop now</a></div>
 <div class="feature-img reveal from-right"><img src="drop-blue.jpg" alt="EXORA Sky Blue drop shoulder"></div>
 </section>
 
 <section class="section reveal from-up">
 <div class="values">
 <div class="value"><b>01 — CLEAN SILHOUETTES</b><p>Minimal pieces made to work with your everyday wardrobe.</p></div>
-<div class="value"><b>02 — EASY TO WEAR</b><p>Drop Shoulder and Acid Wash options in S / M / L.</p></div>
+<div class="value"><b>02 — EASY TO WEAR</b><p>Drop Shoulder and Acid Wash options in M / L / XL.</p></div>
 <div class="value"><b>03 — BUILT DIFFERENT</b><p>A distinct visual identity from product to packaging and online experience.</p></div>
 </div>
 </section>
@@ -127,6 +129,19 @@
 <div class="total"><div class="line"><span>Subtotal</span><b id="sub">৳0</b></div><div class="line"><span>Dhaka delivery</span><b id="del">৳0</b></div><div class="line" style="font-size:18px"><b>Total</b><b id="grand">৳0</b></div><button class="btn" style="width:100%;margin-top:15px" onclick="checkout()">Checkout →</button></div>
 </aside>
 
+<!-- Custom Size Picker Modal -->
+<div class="modal" id="sizeModal">
+  <div class="box" style="text-align:center;max-width:400px">
+    <div class="drawerhead"><h2 id="sizeModalTitle">SELECT SIZE</h2><button class="close" onclick="closeSizeModal()">×</button></div>
+    <p style="color:#888;font-size:12px;margin-top:10px">Choose a size to add to your bag:</p>
+    <div class="size-options">
+      <button class="size-btn" onclick="confirmSize('M')">M</button>
+      <button class="size-btn" onclick="confirmSize('L')">L</button>
+      <button class="size-btn" onclick="confirmSize('XL')">XL</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="modal"><div class="box">
 <div class="drawerhead"><h2>CHECKOUT</h2><button class="close" onclick="closeCheckout()">×</button></div>
 <div id="summary" class="notice"></div>
@@ -144,10 +159,9 @@
 <div id="bkash" class="hidden"><div class="notice">Send the exact total to <b>01312353430</b> using bKash, then enter the transaction ID.</div><div class="field"><label>Transaction ID</label><input id="trx"></div></div>
 </div>
 <p style="font-size:11px;color:#777">Dhaka delivery only · ৳100 delivery · No exchange policy.</p>
-<button class="btn" style="width:100%">Place order</button>
+<button class="btn" id="submitBtn" style="width:100%">Place order</button>
 </form>
 </div></div>
-
 
 <div class="gallery-modal" id="galleryModal" onclick="closeGallery(event)">
   <div class="gallery-box" onclick="event.stopPropagation()">
@@ -156,7 +170,10 @@
     <div class="gallery-thumbs" id="galleryThumbs"></div>
   </div>
 </div>
+
 <script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyHBjABpgZqvHoAKju-gg0Y07B13I949_CqnrVkRDGw5lZlagrKvXI09h7cwJkRly57/exec";
+
 const P=[
 {id:'dw',type:'drop',name:'DROP SHOULDER',color:'White',price:299,img:'drop-white-front.png',gallery:['drop-white-front.png','drop-white-back.png','drop-white-hanger.png']},
 {id:'dn',type:'drop',name:'DROP SHOULDER',color:'Navy Blue',price:299,img:'drop-navy-front.png',gallery:['drop-navy-front.png','drop-navy-back.png','drop-navy-hanger.png']},
@@ -166,8 +183,29 @@ const P=[
 {id:'abr',type:'acid',name:'ACID WASH',color:'Brown',price:399,img:'acid-brown-front.png',gallery:['acid-brown-front.png','acid-brown-back.png','acid-brown-hanger.png']}
 ];
 let cart=[];
+let selectedProductId = null;
+
 const money=n=>'৳'+n.toLocaleString('en-BD');
-function render(list=P){document.getElementById('products').innerHTML=list.map((p,i)=>`<article class="product reveal ${i%2===0?'from-left':'from-right'} delay-${(i%3)+1}"><div class="image" onclick="openGallery('${p.id}')"><img src="${p.img}" alt="EXORA ${p.color} ${p.name}">${p.gallery.length>1?`<span class="photo-count">${p.gallery.length} PHOTOS</span>`:''}</div><div class="info"><h3>${p.name}</h3><div class="color">${p.color}</div><div class="row"><span class="price">${money(p.price)}</span><span class="sizes">S · M · L</span></div><button class="add" onclick="add('${p.id}')">Select size + add to bag</button></div></article>`).join(''); requestReveal();}
+function render(list=P){document.getElementById('products').innerHTML=list.map((p,i)=>`<article class="product reveal ${i%2===0?'from-left':'from-right'} delay-${(i%3)+1}"><div class="image" onclick="openGallery('${p.id}')"><img src="${p.img}" alt="EXORA ${p.color} ${p.name}">${p.gallery.length>1?`<span class="photo-count">${p.gallery.length} PHOTOS</span>`:''}</div><div class="info"><h3>${p.name}</h3><div class="color">${p.color}</div><div class="row"><span class="price">${money(p.price)}</span><span class="sizes">M · L · XL</span></div><button class="add" onclick="openSizeModal('${p.id}')">Select size + add to bag</button></div></article>`).join(''); requestReveal();}
+
+function openSizeModal(id){
+  selectedProductId = id;
+  let p = P.find(x=>x.id===id);
+  document.getElementById('sizeModalTitle').textContent = `${p.name} (${p.color})`;
+  document.getElementById('sizeModal').classList.add('show');
+}
+function closeSizeModal(){document.getElementById('sizeModal').classList.remove('show');}
+
+function confirmSize(s){
+  if(!selectedProductId) return;
+  let id = selectedProductId;
+  let k=id+s,i=cart.find(x=>x.k===k);
+  i?i.q++:cart.push({k,id,s,q:1});
+  update();
+  closeSizeModal();
+  openCart();
+}
+
 let galleryIndex=0;
 function openGallery(id){
   const p=P.find(x=>x.id===id); if(!p)return;
@@ -184,13 +222,48 @@ function showGalleryImage(src,i){
 }
 function closeGallery(){document.getElementById('galleryModal').classList.remove('open');document.body.style.overflow='';}
 function filter(t,btn){document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');render(t==='all'?P:P.filter(p=>p.type===t));document.getElementById('shop').scrollIntoView({behavior:'smooth'})}
-function add(id){let p=P.find(x=>x.id===id),s=prompt(`Choose size for ${p.color}: S, M or L`);if(!s)return;s=s.toUpperCase();if(!['S','M','L'].includes(s)){alert('Please enter S, M or L.');return}let k=id+s,i=cart.find(x=>x.k===k);i?i.q++:cart.push({k,id,s,q:1});update();openCart()}
+
 function update(){document.getElementById('count').textContent=cart.reduce((a,x)=>a+x.q,0);let c=document.getElementById('cart');if(!cart.length)c.innerHTML='<div class="empty">YOUR BAG IS EMPTY.</div>';else c.innerHTML=cart.map((x,n)=>{let p=P.find(y=>y.id===x.id);return `<div class="cartrow"><div><b>${p.name}</b><br><small>${p.color} · Size ${x.s} · Qty ${x.q}</small><br><button class="remove" onclick="removeItem(${n})">Remove</button></div><b>${money(p.price*x.q)}</b></div>`}).join('');let sub=cart.reduce((a,x)=>a+P.find(p=>p.id===x.id).price*x.q,0),d=cart.length?100:0;document.getElementById('sub').textContent=money(sub);document.getElementById('del').textContent=money(d);document.getElementById('grand').textContent=money(sub+d)}
 function removeItem(n){cart.splice(n,1);update()}
 function openCart(){document.getElementById('drawer').classList.add('open');update()}function closeCart(){document.getElementById('drawer').classList.remove('open')}
 function checkout(){if(!cart.length)return alert('Your bag is empty.');let sub=cart.reduce((a,x)=>a+P.find(p=>p.id===x.id).price*x.q,0);document.getElementById('summary').innerHTML=cart.map(x=>{let p=P.find(p=>p.id===x.id);return `${p.name} · ${p.color} · ${x.s} × ${x.q} — <b>${money(p.price*x.q)}</b>`}).join('<br>')+`<hr><b>Total: ${money(sub+100)}</b>`;document.getElementById('modal').classList.add('show')}
 function closeCheckout(){document.getElementById('modal').classList.remove('show')}function payToggle(){document.getElementById('bkash').classList.toggle('hidden',document.querySelector('input[name="pay"]:checked').value!=='bKash')}
-function placeOrder(e){e.preventDefault();let sub=cart.reduce((a,x)=>a+P.find(p=>p.id===x.id).price*x.q,0),order='EXO-'+Math.floor(1000+Math.random()*9000);let data={order_id:order,name:document.getElementById('name').value,phone:document.getElementById('phone').value,area:document.getElementById('area').value,address:document.getElementById('address').value,payment:document.querySelector('input[name="pay"]:checked').value,bkash_transaction:document.getElementById('trx').value,items:cart.map(x=>{let p=P.find(p=>p.id===x.id);return `${p.name} / ${p.color} / ${x.s} x${x.q}`}),total:sub+100};console.log('ORDER DATA — connect this to Google Sheets in the next step:',data);alert(`Order ${order} created!\\nTotal: ${money(sub+100)}\\n\\nNext step: connect this checkout to your free order database.`);cart=[];update();closeCheckout();closeCart()}
+
+function placeOrder(e){
+  e.preventDefault();
+  let btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Placing Order...';
+
+  let sub=cart.reduce((a,x)=>a+P.find(p=>p.id===x.id).price*x.q,0),order='EXO-'+Math.floor(1000+Math.random()*9000);
+  let data={
+    order_id:order,
+    name:document.getElementById('name').value,
+    phone:document.getElementById('phone').value,
+    area:document.getElementById('area').value,
+    address:document.getElementById('address').value,
+    payment:document.querySelector('input[name="pay"]:checked').value,
+    bkash_transaction:document.getElementById('trx').value,
+    items:cart.map(x=>{let p=P.find(p=>p.id===x.id);return `${p.name} / ${p.color} / ${x.s} x${x.q}`}),
+    total:sub+100
+  };
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(() => {
+    alert(`Order ${order} created!\nTotal: ${money(sub+100)}\n\nThank you! We will contact you soon.`);
+    cart=[];update();closeCheckout();closeCart();
+    btn.disabled = false;
+    btn.textContent = 'Place order';
+  }).catch(err => {
+    alert('Something went wrong. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Place order';
+  });
+}
 
 function requestReveal(){
   const els=document.querySelectorAll('.reveal:not(.observer-ready)');
