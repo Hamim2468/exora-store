@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EXORA — Built Different.</title>
+  <meta name="description" content="EXORA — modern essentials & graphic heavyweights. Dhaka delivery. COD and bKash available.">
+  <style>
+    :root {
+      --bg: #070707;
+      --card: #101010;
+      --card2: #151515;
+      --text: #f5f4ef;
+      --muted: #979793;
+      --line: #262626;
+      --gold: #d5b437;
+      --gold2: #f0d45b;
+      --shadow: 0 24px 70px rgba(0,0,0,.38);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+    .page { min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .shell { width: min(1240px, 92vw); margin: auto; }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 76px;
+      background: rgba(7,7,7,.86);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(18px);
+    }
+    .header-in {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { font-weight: 900; letter-spacing: .29em; font-size: 17px; cursor: pointer; }
+    .nav { display: flex; gap: 26px; font-size: 10px; letter-spacing: .17em; color: #d8d7d2; }
+    .nav a { opacity: .8; transition: .25s; cursor: pointer; }
+    .nav a:hover, .nav a.active { opacity: 1; color: var(--gold); }
+    .header-actions { display: flex; gap: 8px; align-items: center; }
+    .icon-btn, .bag-btn {
+      border: 1px solid #323232;
+      background: #0d0d0d;
+      color: white;
+      border-radius: 999px;
+      min-height: 42px;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-btn { width: 42px; padding: 0; }
+    .bag-btn { font-size: 10px; letter-spacing: .12em; cursor: pointer; }
+    .mobile-menu { display: none; }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100vh - 76px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 34%, #2a2a2a 0, #141414 24%, #070707 68%);
+    }
+    .hero:before, .hero:after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 50%;
+      width: 76vw;
+      height: 76vw;
+    }
+    .hero:after { width: 44vw; height: 44vw; border-color: rgba(213,180,55,.12); }
+    .hero-inner { position: relative; z-index: 1; padding: 70px 0; }
+    .eyebrow { font-size: 10px; letter-spacing: .32em; color: var(--gold); text-transform: uppercase; }
+    .hero h1 {
+      font-size: clamp(60px, 13vw, 170px);
+      line-height: .8;
+      letter-spacing: .04em;
+      margin: 22px 0 28px;
+      font-weight: 900;
+    }
+    .hero p { max-width: 580px; color: #aaa; line-height: 1.7; margin: 0 auto 30px; }
+    .hero-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      background: #efeee9;
+      color: #090909;
+      border: 1px solid #eee;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,255,255,.08); }
+    .btn.dark { background: #0d0d0d; color: #fff; border-color: #3b3b3b; }
+    .btn.gold { background: var(--gold); color: #090909; border-color: var(--gold); }
+    .btn.full { width: 100%; }
+
+    /* Layout Sections */
+    .section { padding: 80px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 25px; margin-bottom: 35px; flex-wrap: wrap; }
+    .section-head h2, .page-title { font-size: clamp(38px, 6.5vw, 80px); line-height: .88; margin: 15px 0 0; letter-spacing: -.04em; }
+    .muted { color: var(--muted); }
+
+    /* Products Grid */
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transition: transform .45s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .45s;
+    }
+    .product-card:hover { transform: translateY(-7px); border-color: #3a3a3a; box-shadow: var(--shadow); }
+    .product-image { aspect-ratio: 4/5; position: relative; overflow: hidden; background: #111; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+    .product-card:hover .product-image img { transform: scale(1.045); }
+    .photo-count { position: absolute; right: 12px; top: 12px; padding: 7px 9px; background: rgba(7,7,7,.75); border: 1px solid rgba(255,255,255,.08); font-size: 9px; letter-spacing: .12em; }
+    .badge-tag { position: absolute; left: 12px; top: 12px; padding: 7px 9px; background: var(--gold); color: #000; font-weight: 900; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .product-info { padding: 18px; }
+    .product-top { display: flex; justify-content: space-between; gap: 15px; }
+    .product-name { font-size: 13px; letter-spacing: .1em; margin: 0 0 7px; text-transform: uppercase; }
+    .product-color { color: #999; font-size: 12px; }
+    .price { font-weight: 900; font-size: 16px; }
+    .product-meta { font-size: 9px; letter-spacing: .14em; color: #777; margin-top: 11px; }
+
+    /* Intro & Feature */
+    .intro { padding: 100px 0; text-align: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .intro h2 { font-size: clamp(40px, 6.5vw, 88px); line-height: .92; margin: 18px auto 25px; max-width: 1050px; letter-spacing: -.04em; }
+    .intro p { max-width: 650px; margin: auto; color: var(--muted); line-height: 1.7; }
+
+    .feature { display: grid; grid-template-columns: 1fr 1fr; }
+    .feature-copy { padding: 80px; background: #f1f0eb; color: #090909; display: flex; justify-content: center; flex-direction: column; }
+    .feature-copy h2 { font-size: clamp(46px, 6.5vw, 90px); line-height: .86; margin: 18px 0; }
+    .feature-copy p { max-width: 500px; color: #565651; line-height: 1.7; }
+    .feature-copy .btn { align-self: flex-start; background: #090909; color: #fff; border-color: #090909; }
+    .feature-img { min-height: 600px; overflow: hidden; background: #181818; }
+    .feature-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Detail / Variant Layout */
+    .variant-layout { display: grid; grid-template-columns: 1.05fr .95fr; gap: 42px; }
+    .gallery { position: sticky; top: 100px; align-self: start; }
+    .gallery-main { aspect-ratio: 4/5; overflow: hidden; background: #111; border: 1px solid var(--line); }
+    .gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumbs { display: flex; gap: 10px; margin-top: 11px; overflow: auto; }
+    .thumbs button { padding: 0; border: 1px solid #303030; background: #101010; min-width: 82px; width: 82px; height: 104px; position: relative; overflow: hidden; }
+    .thumbs button.active { border-color: var(--gold); }
+    .thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumbs button span { position: absolute; left: 5px; bottom: 5px; padding: 4px 5px; background: rgba(7,7,7,.78); border: 1px solid rgba(255,255,255,.08); font-size: 8px; letter-spacing: .1em; color: #fff; }
+    .gallery-note { margin-top: 9px; font-size: 10px; color: #777; letter-spacing: .08em; text-transform: uppercase; }
+    .product-detail h1 { font-size: clamp(38px, 5.5vw, 72px); line-height: .9; margin: 10px 0; }
+    .detail-price { font-size: 24px; font-weight: 900; color: var(--gold); }
+    .detail-copy { padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 25px 0; line-height: 1.7; color: #c4c4bf; }
+    .specs { display: grid; gap: 10px; background: #111; border: 1px solid var(--line); padding: 18px; }
+    .spec { display: flex; justify-content: space-between; gap: 20px; color: #aaa; }
+    .spec b { color: #eee; }
+    .selector { margin: 25px 0; }
+    .selector-title { font-size: 10px; letter-spacing: .14em; margin-bottom: 10px; }
+    .swatches, .sizes { display: flex; gap: 10px; flex-wrap: wrap; }
+    .swatch, .size-btn { border: 1px solid #333; background: #121212; color: #ddd; min-height: 48px; padding: 0 15px; }
+    .swatch.active, .size-btn.active { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); color: #fff; }
+    .swatch { display: flex; align-items: center; gap: 9px; }
+    .dot { width: 16px; height: 16px; border-radius: 50%; border: 1px solid #666; }
+    .detail-actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .stock-note { font-size: 11px; color: #888; margin-top: 10px; }
+
+    /* Cart & Checkout */
+    .cart-layout { display: grid; grid-template-columns: 1.4fr .6fr; gap: 20px; }
+    .cart-row { display: grid; grid-template-columns: 100px 1fr auto; gap: 16px; align-items: center; background: #101010; border: 1px solid var(--line); padding: 12px; margin-bottom: 12px; }
+    .cart-row img { width: 100px; height: 120px; object-fit: cover; }
+    .cart-actions { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+    .qty { display: flex; border: 1px solid #333; }
+    .qty button { width: 34px; height: 36px; background: #0b0b0b; color: #fff; border: 0; }
+    .qty span { width: 38px; display: grid; place-items: center; }
+    .summary { background: #111; border: 1px solid var(--line); padding: 22px; position: sticky; top: 100px; }
+    .summary .line { display: flex; justify-content: space-between; margin: 10px 0; }
+    .summary .total { font-size: 20px; border-top: 1px solid var(--line); padding-top: 15px; margin-top: 15px; }
+
+    /* Form Inputs */
+    .form { background: #101010; border: 1px solid var(--line); padding: 22px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .field.full { grid-column: 1/-1; }
+    .field label { display: block; color: #999; font-size: 9px; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 7px; }
+    .field input, .field select { width: 100%; padding: 13px; background: #080808; border: 1px solid #333; color: #fff; outline: none; }
+    .paybox { border: 1px solid #2a2a2a; padding: 14px; margin: 15px 0; }
+    .notice { background: #0c0c0c; border: 1px solid #282828; padding: 13px; color: #999; font-size: 12px; line-height: 1.6; }
+
+    /* Orders Grid */
+    .orders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .order-card { background: #111; border: 1px solid var(--line); padding: 20px; transition: .35s; }
+    .order-card:hover { transform: translateY(-4px); border-color: #3b3b3b; }
+    .status { display: inline-flex; padding: 7px 10px; font-size: 9px; letter-spacing: .13em; text-transform: uppercase; border: 1px solid #444; }
+    .status.pending { color: #e8ca70; border-color: #8e7534; }
+    .status.confirmed { color: #93e1a6; border-color: #477555; }
+    .status.cancelled { color: #ff9292; border-color: #7a4444; }
+    .order-card h3 { margin: 13px 0 7px; font-size: 20px; }
+    .order-card p { color: #888; font-size: 12px; line-height: 1.6; }
+    .order-actions { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 15px; }
+
+    /* About Grid */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .markbox { min-height: 400px; display: grid; place-items: center; background: radial-gradient(circle,#292929,#090909 66%); border: 1px solid var(--line); }
+    .markbox img { width: 42%; max-width: 270px; filter: grayscale(1) brightness(2); }
+
+    /* Footer */
+    .footer { border-top: 1px solid var(--line); padding: 55px 0 25px; }
+    .footgrid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px; }
+    .footer h4 { font-size: 9px; letter-spacing: .17em; margin-bottom: 12px; }
+    .footer a, .footer p { font-size: 12px; color: #888; margin: 9px 0; display: block; }
+    .copy { border-top: 1px solid var(--line); padding-top: 17px; margin-top: 35px; font-size: 10px; color: #666; }
+
+    /* Utility */
+    .empty { padding: 80px 20px; text-align: center; color: #666; border: 1px dashed #2a2a2a; }
+    .search-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.85); z-index: 100; display: none; align-items: flex-start; padding: 120px 20px; }
+    .search-overlay.open { display: flex; }
+    .search-box { width: min(720px, 100%); margin: auto; background: #101010; border: 1px solid #333; padding: 25px; }
+    .search-box input { width: 100%; padding: 15px; background: #080808; color: #fff; border: 1px solid #333; font-size: 16px; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .products { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .nav {
+        display: none;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        right: 0;
+        background: #0d0d0d;
+        border-bottom: 1px solid var(--line);
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .nav.open { display: flex; }
+      .mobile-menu { display: inline-flex; }
+      .feature, .variant-layout, .about-grid { grid-template-columns: 1fr; }
+      .gallery { position: static; }
+      .feature-img { min-height: 380px; }
+      .orders-grid { grid-template-columns: 1fr; }
+      .cart-layout { grid-template-columns: 1fr !important; }
+      .summary { position: static; }
+      .footgrid { grid-template-columns: 1fr 1fr; }
+      .footgrid > div:first-child { grid-column: 1/-1; }
+    }
+
+    @media (max-width: 640px) {
+      .header { height: 66px; }
+      .nav { top: 66px; }
+      .products { grid-template-columns: 1fr 1fr; gap: 9px; }
+      .product-info { padding: 13px; }
+      .product-info .btn { font-size: 9px; padding: 0 8px; }
+      .product-name { font-size: 11px; }
+      .price { font-size: 14px; }
+      .feature-copy { padding: 40px 20px; }
+      .feature-img { min-height: 280px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .cart-row { grid-template-columns: 78px 1fr; }
+      .cart-row img { width: 78px; height: 96px; }
+      .detail-actions { grid-template-columns: 1fr; }
+      .page-title { font-size: 44px; }
+      .footgrid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="shell header-in">
+      <a class="brand" onclick="navigate('home')">EXORA</a>
+      <nav class="nav" id="mainNav">
+        <a id="nav-shop" onclick="navigate('shop')">SHOP</a>
+        <a id="nav-orders" onclick="navigate('orders')">MY ORDERS</a>
+        <a id="nav-about" onclick="navigate('about')">ABOUT</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="openSearch()" aria-label="Search">⌕</button>
+        <a class="bag-btn" onclick="navigate('cart')">BAG · <span data-bag-count>0</span></a>
+        <button class="icon-btn mobile-menu" onclick="toggleMobileNav()" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN VIEWS CONTAINER -->
+  <main class="page">
+
+    <!-- HOME VIEW -->
+    <div id="view-home" class="view">
+      <section class="hero">
+        <div class="hero-inner shell">
+          <div class="eyebrow">EXORA · DHAKA · 2026</div>
+          <h1>BUILT<br>DIFFERENT.</h1>
+          <p>Modern heavyweight essentials & graphic drop shoulder silhouettes. Wear your difference.</p>
+          <div class="hero-actions">
+            <button class="btn" onclick="navigate('shop')">Explore collection</button>
+            <button class="btn dark" onclick="navigate('orders')">My Orders</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="intro">
+        <div class="shell">
+          <div class="eyebrow">THE EXORA STANDARD</div>
+          <h2>MINIMAL BY DESIGN.<br>DIFFERENT BY NATURE.</h2>
+          <p>We keep the silhouettes clean, the graphics high-density, and the experience intentional.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">01 / FEATURED COLLECTION</div>
+              <h2>ALL DROPS.</h2>
+            </div>
+            <button class="btn dark" onclick="navigate('shop')">View all →</button>
+          </div>
+          <div class="products" id="featuredGrid"></div>
+        </div>
+      </section>
+
+      <section class="feature">
+        <div class="feature-copy">
+          <div class="eyebrow">02 / SPIDER GRAPHIC DROP</div>
+          <h2>SUPREME<br>SPIDER DROP<br>SHOULDER.</h2>
+          <p>Gothic Supreme font chest print and giant back spider web emblem "BORN TO STAND OUT". Heavyweight relaxed drop shoulder fit.</p>
+          <button class="btn" onclick="navigate('product', 'supreme')">View Supreme Spider</button>
+        </div>
+        <div class="feature-img">
+          <img src="4067.png" alt="EXORA Supreme Spider Black" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800'">
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">03 / EXPERIENCE</div>
+              <h2>MADE TO FEEL<br>LIKE EXORA.</h2>
+            </div>
+          </div>
+          <div class="products" style="grid-template-columns: 1fr 1fr;">
+            <div class="order-card">
+              <div class="eyebrow">01</div>
+              <h3>MULTIPLE COLOUR VARIANTS.</h3>
+              <p>Select your favorite color on the product page and instantly preview the exact mockup gallery.</p>
+            </div>
+            <div class="order-card">
+              <div class="eyebrow">02</div>
+              <h3>NO LOGIN REQUIRED.</h3>
+              <p>Orders stay linked to your phone number and browser device for effortless tracking.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SHOP VIEW -->
+    <div id="view-shop" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">01 / SHOP</div>
+              <h1 class="page-title">THE COLLECTION.</h1>
+              <p class="muted">Explore our full line-up of basic essentials and high-density graphic drops.</p>
+            </div>
+            <div class="hero-actions">
+              <button class="btn filter active" onclick="setShopFilter('all', this)">All</button>
+              <button class="btn dark filter" onclick="setShopFilter('supreme', this)">Supreme Spider</button>
+              <button class="btn dark filter" onclick="setShopFilter('graphic', this)">AOT Collection</button>
+              <button class="btn dark filter" onclick="setShopFilter('drop', this)">Drop Shoulder</button>
+              <button class="btn dark filter" onclick="setShopFilter('acid', this)">Acid Wash</button>
+            </div>
+          </div>
+          <div class="products" id="shopGrid"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PRODUCT DETAIL VIEW -->
+    <div id="view-product" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell" id="productRoot"></div>
+      </section>
+    </div>
+
+    <!-- CART VIEW -->
+    <div id="view-cart" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">02 / BAG</div>
+              <h1 class="page-title">YOUR BAG.</h1>
+            </div>
+          </div>
+          <div class="cart-layout">
+            <div id="cartList"></div>
+            <aside class="summary">
+              <div class="line"><span>Subtotal</span><b id="cartSub">৳0</b></div>
+              <div class="line"><span>Dhaka delivery</span><b id="cartDelivery">৳0</b></div>
+              <div class="line total"><b>Total</b><b id="cartTotal">৳0</b></div>
+              <button id="checkoutBtn" class="btn gold full" style="display:none;margin-top:18px" onclick="navigate('checkout')">Checkout →</button>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CHECKOUT VIEW -->
+    <div id="view-checkout" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">03 / CHECKOUT</div>
+              <h1 class="page-title">CHECKOUT.</h1>
+            </div>
+          </div>
+          <div class="cart-layout">
+            <form class="form" id="checkoutForm" onsubmit="handleCheckoutSubmit(event)">
+              <div class="form-grid">
+                <div class="field"><label>Full name</label><input id="name" required></div>
+                <div class="field"><label>Phone</label><input id="phone" required inputmode="tel" placeholder="01XXXXXXXXX"></div>
+                <div class="field"><label>Area</label><input id="area" required></div>
+                <div class="field"><label>District</label><input value="Dhaka" readonly></div>
+                <div class="field full"><label>Full address</label><input id="address" required></div>
+              </div>
+              <div class="paybox">
+                <b>Payment method</b>
+                <label style="display:block;margin:12px 0;cursor:pointer"><input type="radio" name="pay" value="COD" checked onchange="toggleBkashBox()"> Cash on Delivery</label>
+                <label style="display:block;cursor:pointer"><input type="radio" name="pay" value="bKash" onchange="toggleBkashBox()"> bKash</label>
+                <div id="bkashBox" class="notice" style="display:none;margin-top:12px">
+                  Send the exact total to <b>01312353430</b> using bKash, then enter the transaction ID.
+                  <div class="field" style="margin-top:12px"><label>Transaction ID</label><input id="trx"></div>
+                </div>
+              </div>
+              <div class="notice">Dhaka delivery only · ৳100 delivery · No exchange policy.</div>
+              <button class="btn gold full" id="submitOrder" style="margin-top:15px" type="submit">Place order</button>
+            </form>
+            <aside class="summary">
+              <h3 style="margin-top:0">ORDER SUMMARY</h3>
+              <div id="checkoutSummary"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- MY ORDERS VIEW -->
+    <div id="view-orders" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell">
+          <div>
+            <div class="eyebrow">04 / MY ORDERS</div>
+            <h1 class="page-title">MY ORDERS.</h1>
+            <p class="muted">No account required. Enter your phone number to fetch all your placed orders.</p>
+          </div>
+          <div class="form" style="margin:25px 0">
+            <div class="field">
+              <label>Find orders by phone number</label>
+              <input id="lookupPhone" inputmode="tel" placeholder="01XXXXXXXXX">
+              <button class="btn dark" style="margin-top:10px" onclick="lookupOrders()">Find my orders</button>
+            </div>
+            <div class="notice" style="margin-top:10px">Your recent orders placed on this browser automatically load below.</div>
+          </div>
+          <div id="ordersGrid" class="orders-grid"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ORDER DETAIL VIEW -->
+    <div id="view-order-detail" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell">
+          <div id="orderRoot"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABOUT VIEW -->
+    <div id="view-about" class="view" style="display:none;">
+      <section class="section">
+        <div class="shell about-grid">
+          <div class="about-copy">
+            <div class="eyebrow">EXORA / ABOUT</div>
+            <h1 class="page-title">WEAR YOUR DIFFERENCE.</h1>
+            <p class="muted" style="font-size:15px;line-height:1.8;max-width:580px">
+              EXORA is a modern clothing label built around a simple idea: everyday clothing should still have an identity. Clean silhouettes, confident details and a focused visual language.
+            </p>
+            <button class="btn gold" onclick="navigate('shop')">Shop EXORA</button>
+          </div>
+          <div class="markbox">
+            <img src="exora-mark.jpg" alt="EXORA mark" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600'">
+          </div>
+        </div>
+      </section>
+      <section class="intro">
+        <div class="shell">
+          <div class="eyebrow">THE STANDARD</div>
+          <h2>CLEAN. INTENTIONAL.<br>BUILT DIFFERENT.</h2>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="shell">
+      <div class="footgrid">
+        <div>
+          <div class="brand">EXORA</div>
+          <p>BUILT DIFFERENT.</p>
+        </div>
+        <div>
+          <h4>SHOP</h4>
+          <a onclick="navigate('shop')">Collection</a>
+          <a onclick="navigate('shop')">Supreme Spider</a>
+          <a onclick="navigate('shop')">AOT Collection</a>
+          <a onclick="navigate('shop')">Drop Shoulder</a>
+          <a onclick="navigate('shop')">Acid Wash</a>
+        </div>
+        <div>
+          <h4>INFO</h4>
+          <a onclick="navigate('about')">About EXORA</a>
+          <a onclick="navigate('orders')">My Orders</a>
+          <a href="mailto:exoraexo@gmail.com">Email</a>
+        </div>
+        <div>
+          <h4>CONNECT</h4>
+          <a href="https://www.instagram.com/exora_exo/" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:exoraexo@gmail.com">exoraexo@gmail.com</a>
+        </div>
+      </div>
+      <div class="copy">© 2026 EXORA · DHAKA DELIVERY ONLY · DELIVERY ৳100</div>
+    </div>
+  </footer>
+
+  <!-- SEARCH OVERLAY -->
+  <div id="searchOverlay" class="search-overlay">
+    <div class="search-box">
+      <button class="btn dark" style="float:right" onclick="closeSearch()">Close</button>
+      <h2 style="margin-top:0">SEARCH EXORA</h2>
+      <input id="searchInput" placeholder="Search products..." oninput="searchProducts(this.value)">
+      <div id="searchResults" style="margin-top:15px"></div>
+    </div>
+  </div>
+
+  <script>
+    // GOOGLE APPS SCRIPT BACKEND URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdD5c860b2hOtcOLJ72-xC9YL8qkqldQyFJkAuXRsAGxqzlcCknaBEurADiWUZHutz/exec";
+
+    // EXPANDED PRODUCTS CATALOG DATA (SIZES UPDATED TO REMOVE 'S' -> ONLY M, L, XL)
+    const PRODUCTS = [
+      {
+        id: 'supreme',
+        name: 'SUPREME SPIDER DROP SHOULDER',
+        type: 'supreme',
+        tag: 'NEW DROP',
+        price: 450,
+        sizes: ['M', 'L', 'XL'],
+        description: 'Heavyweight drop shoulder t-shirt with front Gothic Supreme logo print and large back Spider Emblem graphic with "BORN TO STAND OUT" motto.',
+        specs: { Fabric: '100% Combed Cotton', GSM: '210–230 GSM', Print: 'High-Density Screen Print', Fit: 'Heavyweight Drop Shoulder' },
+        variants: [
+          { key: 'white', name: 'White', cover: '4066.png', gallery: ['4066.png'], swatch: '#f5f5f5' },
+          { key: 'black', name: 'Black', cover: '4067.png', gallery: ['4067.png'], swatch: '#111111' },
+          { key: 'sky', name: 'Sky Blue', cover: '4065.png', gallery: ['4065.png'], swatch: '#9bb3c4' },
+          { key: 'acid_brown', name: 'Acid Brown', cover: '4064.png', gallery: ['4064.png'], swatch: '#4d372c' },
+          { key: 'acid_black', name: 'Acid Black', cover: '4063.png', gallery: ['4063.png'], swatch: '#22252a' }
+        ]
+      },
+      {
+        id: 'aot',
+        name: 'AOT TATAKAE DROP SHOULDER',
+        type: 'graphic',
+        tag: 'HOT DROP',
+        price: 450,
+        sizes: ['M', 'L', 'XL'],
+        description: 'Attack on Titan edition drop-shoulder silhouette featuring front chest Japanese calligraphy (戦え - Tatakae) with Katana graphic, and high-density Attack Titan graphic on the back.',
+        specs: { Fabric: '100% Combed Cotton', GSM: '210–230 GSM', Print: 'High-Density Screen Print', Fit: 'Heavyweight Drop Shoulder' },
+        variants: [
+          { key: 'white', name: 'White', cover: '3490.png', gallery: ['3490.png'], swatch: '#f5f5f5' },
+          { key: 'black', name: 'Black', cover: '4024.png', gallery: ['4024.png'], swatch: '#111111' },
+          { key: 'sky', name: 'Sky Blue', cover: '4025.png', gallery: ['4025.png'], swatch: '#9bb3c4' },
+          { key: 'navy', name: 'Navy Blue', cover: '4026.png', gallery: ['4026.png'], swatch: '#212c47' },
+          { key: 'acid_brown', name: 'Acid Brown', cover: '4036.png', gallery: ['4036.png'], swatch: '#4d372c' },
+          { key: 'acid_black', name: 'Acid Black', cover: '4037.png', gallery: ['4037.png'], swatch: '#22252a' }
+        ]
+      },
+      {
+        id: 'drop',
+        name: 'DROP SHOULDER BASICS',
+        type: 'drop',
+        tag: 'ESSENTIAL',
+        price: 299,
+        sizes: ['M', 'L', 'XL'],
+        description: 'Clean, heavyweight everyday silhouettes with a premium finish.',
+        specs: { Fabric: '100% Cotton', GSM: '200–220 GSM', Fit: 'Drop Shoulder' },
+        variants: [
+          { key: 'white', name: 'White', cover: 'drop-white-front.png', gallery: ['drop-white-front.png', 'drop-white-back.png', 'drop-white-hanger.png'], swatch: '#f4f4f1' },
+          { key: 'black', name: 'Black', cover: 'drop-black-front.png', gallery: ['drop-black-front.png', 'drop-black-back.png'], swatch: '#111' },
+          { key: 'navy', name: 'Navy Blue', cover: 'drop-navy-front.png', gallery: ['drop-navy-front.png', 'drop-navy-back.png', 'drop-navy-hanger.png'], swatch: '#1c2b50' },
+          { key: 'sky', name: 'Sky Blue', cover: 'drop-sky-front.png', gallery: ['drop-sky-front.png', 'drop-sky-back.png', 'drop-sky-hanger.png'], swatch: '#7db9d5' }
+        ]
+      },
+      {
+        id: 'acid',
+        name: 'ACID WASH STATEMENT',
+        type: 'acid',
+        tag: 'RAW',
+        price: 399,
+        sizes: ['M', 'L', 'XL'],
+        description: 'Statement acid-wash texture with a darker, more graphic finish.',
+        specs: { Fabric: 'Premium Cotton', GSM: '200–220 GSM', Fit: 'Relaxed' },
+        variants: [
+          { key: 'black', name: 'Black Acid', cover: 'acid-black-front.png', gallery: ['acid-black-front.png', 'acid-black-back.png', 'acid-black-hanger.png'], swatch: '#141414' },
+          { key: 'brown', name: 'Brown Acid', cover: 'acid-brown-front.png', gallery: ['acid-brown-front.png', 'acid-brown-back.png', 'acid-brown-hanger.png'], swatch: '#6b4c3b' }
+        ]
+      }
+    ];
+
+    // STATE
+    let currentProductId = 'supreme';
+    let currentVariantKey = 'black';
+    let currentSize = null;
+
+    // HELPERS
+    const money = n => '৳' + Number(n || 0).toLocaleString('en-BD');
+    const getCart = () => JSON.parse(localStorage.getItem('exora_cart') || '[]');
+    const setCart = c => { localStorage.setItem('exora_cart', JSON.stringify(c)); updateBagCount(); };
+    const getOrders = () => JSON.parse(localStorage.getItem('exora_orders') || '[]');
+    const setOrders = o => localStorage.setItem('exora_orders', JSON.stringify(o));
+
+    function cleanPhone(phone) {
+      let p = String(phone || '').replace(/\D/g, '');
+      if (p.startsWith('880') && p.length >= 13) p = '0' + p.substring(3);
+      else if (p.startsWith('00880') && p.length >= 15) p = '0' + p.substring(5);
+      return p;
+    }
+
+    function productById(id) { return PRODUCTS.find(p => p.id === id) || PRODUCTS[0]; }
+    function variantOf(p, key) { return p.variants.find(v => v.key === key) || p.variants[0]; }
+
+    function updateBagCount() {
+      const n = getCart().reduce((a, x) => a + x.qty, 0);
+      document.querySelectorAll('[data-bag-count]').forEach(e => e.textContent = n);
+    }
+
+    function toggleMobileNav() {
+      const nav = document.getElementById('mainNav');
+      if (nav) nav.classList.toggle('open');
+    }
+
+    function openSearch() {
+      document.getElementById('searchOverlay')?.classList.add('open');
+      document.getElementById('searchInput')?.focus();
+    }
+
+    function closeSearch() {
+      document.getElementById('searchOverlay')?.classList.remove('open');
+    }
+
+    // NAVIGATION
+    function navigate(viewId, param = null) {
+      document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+      document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
+
+      const navElem = document.getElementById(`nav-${viewId}`);
+      if (navElem) navElem.classList.add('active');
+
+      const target = document.getElementById(`view-${viewId}`);
+      if (target) target.style.display = 'block';
+
+      document.getElementById('mainNav')?.classList.remove('open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (viewId === 'home') renderHome();
+      else if (viewId === 'shop') renderShop();
+      else if (viewId === 'product') {
+        if (param) currentProductId = param;
+        const p = productById(currentProductId);
+        currentVariantKey = p.variants[0].key;
+        currentSize = null;
+        renderProduct();
+      }
+      else if (viewId === 'cart') renderCartPage();
+      else if (viewId === 'checkout') renderCheckoutPage();
+      else if (viewId === 'orders') renderOrdersPage();
+      else if (viewId === 'order-detail') {
+        if (param) loadAndRenderOrderDetail(param);
+      }
+    }
+
+    // PRODUCT CARD GENERATOR
+    function productCardHtml(p) {
+      const v = p.variants[0];
+      return `
+        <article class="product-card">
+          <a onclick="navigate('product', '${p.id}')">
+            <div class="product-image">
+              ${p.tag ? `<span class="badge-tag">${p.tag}</span>` : ''}
+              <img src="${v.cover}" alt="EXORA ${p.name}" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800'">
+              <span class="photo-count">${v.gallery.length} PHOTOS</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <div>
+                  <h3 class="product-name">${p.name}</h3>
+                  <div class="product-color">${p.variants.length} color options</div>
+                </div>
+                <div class="price">${money(p.price)}</div>
+              </div>
+              <div class="product-meta">M · L · XL · SELECT COLOR ON PRODUCT PAGE</div>
+              <button class="btn dark" style="margin-top:15px;width:100%">View product →</button>
+            </div>
+          </a>
+        </article>
+      `;
+    }
+
+    function renderHome() {
+      const g = document.getElementById('featuredGrid');
+      if (g) g.innerHTML = PRODUCTS.map(p => productCardHtml(p)).join('');
+    }
+
+    function renderShop(filterType = 'all') {
+      const g = document.getElementById('shopGrid');
+      const filtered = filterType === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.type === filterType);
+      if (g) g.innerHTML = filtered.map(p => productCardHtml(p)).join('');
+    }
+
+    function setShopFilter(type, btn) {
+      document.querySelectorAll('.filter').forEach(b => b.classList.add('dark'));
+      btn.classList.remove('dark');
+      renderShop(type);
+    }
+
+    function renderProduct() {
+      const root = document.getElementById('productRoot');
+      const p = productById(currentProductId);
+      const v = variantOf(p, currentVariantKey);
+
+      root.innerHTML = `
+        <div class="variant-layout">
+          <div class="gallery">
+            <div class="gallery-main">
+              <img id="mainImage" src="${v.gallery[0]}" alt="EXORA ${p.name} ${v.name}" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800'">
+            </div>
+            <div class="thumbs" id="thumbs"></div>
+            <div class="gallery-note">${v.gallery.length} photos available · Select color to view front/back mockup</div>
+          </div>
+          <div class="product-detail">
+            <div class="eyebrow">EXORA / ${p.type.toUpperCase()} COLLECTION</div>
+            <h1>${p.name}</h1>
+            <div class="detail-price">${money(p.price)}</div>
+            <p class="detail-copy">${p.description}</p>
+            <div class="specs">
+              ${Object.entries(p.specs).map(([k, val]) => `<div class="spec"><span>${k}</span><b>${val}</b></div>`).join('')}
+            </div>
+            <div class="selector">
+              <div class="selector-title">SELECT COLOUR (${p.variants.length} AVAILABLE)</div>
+              <div class="swatches">
+                ${p.variants.map(x => `
+                  <button class="swatch ${x.key === v.key ? 'active' : ''}" onclick="selectVariant('${x.key}')">
+                    <span class="dot" style="background:${x.swatch}"></span>${x.name}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+            <div class="selector">
+              <div class="selector-title">SELECT SIZE</div>
+              <div class="sizes">
+                ${p.sizes.map(s => `
+                  <button class="size-btn ${currentSize === s ? 'active' : ''}" onclick="selectSize('${s}')">${s}</button>
+                `).join('')}
+              </div>
+            </div>
+            <div class="stock-note">In stock · Dhaka delivery only · ৳100 delivery</div>
+            <div class="detail-actions" style="margin-top:20px;">
+              <button class="btn gold" onclick="handleAddToCart()">Add to bag</button>
+              <button class="btn dark" onclick="navigate('cart')">View bag</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('thumbs').innerHTML = v.gallery.map((src, i) => {
+        const label = i === 0 ? 'FRONT/BACK' : (i === 1 ? 'BACK' : 'DETAIL');
+        return `
+          <button class="${i === 0 ? 'active' : ''}" onclick="showPhoto('${src}', this)">
+            <img src="${src}" alt="${label}" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800'">
+            <span>${label}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function showPhoto(src, btn) {
+      const img = document.getElementById('mainImage');
+      if (img) img.src = src;
+      document.querySelectorAll('.thumbs button').forEach(x => x.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function selectVariant(key) {
+      currentVariantKey = key;
+      renderProduct();
+    }
+
+    function selectSize(s) {
+      currentSize = s;
+      renderProduct();
+    }
+
+    function handleAddToCart() {
+      if (!currentSize) {
+        alert('Please select a size first.');
+        return;
+      }
+      const p = productById(currentProductId);
+      const v = variantOf(p, currentVariantKey);
+      const c = getCart();
+      const k = `${p.id}__${v.key}__${currentSize}`;
+      const existing = c.find(x => x.key === k);
+
+      if (existing) existing.qty++;
+      else c.push({ key: k, productId: p.id, variantKey: v.key, size: currentSize, qty: 1 });
+
+      setCart(c);
+      navigate('cart');
+    }
+
+    // CART
+    function cartTotals() {
+      const c = getCart();
+      const sub = c.reduce((sum, x) => {
+        const p = productById(x.productId);
+        return sum + p.price * x.qty;
+      }, 0);
+      return { sub, delivery: c.length ? 100 : 0, total: sub + (c.length ? 100 : 0) };
+    }
+
+    function renderCartPage() {
+      const list = document.getElementById('cartList');
+      if (!list) return;
+      const c = getCart();
+      if (!c.length) {
+        list.innerHTML = `<div class="empty">YOUR BAG IS EMPTY.<br><br><button class="btn dark" onclick="navigate('shop')">Shop the collection</button></div>`;
+      } else {
+        list.innerHTML = c.map(x => {
+          const p = productById(x.productId), v = variantOf(p, x.variantKey);
+          return `
+            <div class="cart-row">
+              <img src="${v.cover}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800'">
+              <div>
+                <h3 class="product-name">${p.name}</h3>
+                <div class="product-color">${v.name} · Size ${x.size}</div>
+                <div class="cart-actions">
+                  <div class="qty">
+                    <button onclick="changeQty('${x.key}', -1)">−</button>
+                    <span>${x.qty}</span>
+                    <button onclick="changeQty('${x.key}', 1)">+</button>
+                  </div>
+                  <button class="btn dark" style="min-height:36px" onclick="removeCart('${x.key}')">Remove</button>
+                </div>
+              </div>
+              <strong>${money(p.price * x.qty)}</strong>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const t = cartTotals();
+      document.getElementById('cartSub').textContent = money(t.sub);
+      document.getElementById('cartDelivery').textContent = money(t.delivery);
+      document.getElementById('cartTotal').textContent = money(t.total);
+      document.getElementById('checkoutBtn').style.display = c.length ? 'inline-flex' : 'none';
+      updateBagCount();
+    }
+
+    function changeQty(key, delta) {
+      const c = getCart();
+      const item = c.find(x => x.key === key);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) c.splice(c.indexOf(item), 1);
+      setCart(c);
+      renderCartPage();
+    }
+
+    function removeCart(key) {
+      setCart(getCart().filter(x => x.key !== key));
+      renderCartPage();
+    }
+
+    // CHECKOUT
+    function renderCheckoutPage() {
+      const c = getCart();
+      const sumBox = document.getElementById('checkoutSummary');
+      const btn = document.getElementById('submitOrder');
+
+      if (!c.length) {
+        sumBox.innerHTML = '<div class="empty">Your bag is empty.</div>';
+        if (btn) btn.disabled = true;
+        return;
+      }
+
+      if (btn) btn.disabled = false;
+      const t = cartTotals();
+      sumBox.innerHTML = c.map(x => {
+        const p = productById(x.productId), v = variantOf(p, x.variantKey);
+        return `
+          <div style="padding:12px 0;border-bottom:1px solid #282828">
+            <b>${p.name}</b><br>
+            <span class="muted">${v.name} · ${x.size} · Qty ${x.qty}</span><br>
+            <strong>${money(p.price * x.qty)}</strong>
+          </div>
+        `;
+      }).join('') + `
+        <div class="line" style="margin-top:15px"><span>Subtotal</span><b>${money(t.sub)}</b></div>
+        <div class="line"><span>Delivery</span><b>${money(100)}</b></div>
+        <div class="line total"><b>Total</b><b>${money(t.total)}</b></div>
+      `;
+    }
+
+    function toggleBkashBox() {
+      const isBkash = document.querySelector('input[name="pay"]:checked')?.value === 'bKash';
+      document.getElementById('bkashBox').style.display = isBkash ? 'block' : 'none';
+    }
+
+    async function handleCheckoutSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitOrder');
+      btn.disabled = true;
+      btn.textContent = 'Placing order…';
+
+      const c = getCart();
+      const t = cartTotals();
+      const orderId = 'EXO-' + Math.floor(1000 + Math.random() * 9000);
+      const phoneInput = document.getElementById('phone').value.trim();
+
+      const orderPayload = {
+        order_id: orderId,
+        name: document.getElementById('name').value.trim(),
+        phone: phoneInput,
+        area: document.getElementById('area').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        payment: document.querySelector('input[name="pay"]:checked').value,
+        bkash_transaction: (document.getElementById('trx')?.value || '').trim(),
+        items: c.map(x => {
+          const p = productById(x.productId), v = variantOf(p, x.variantKey);
+          return `${p.name} / ${v.name} / ${x.size} x${x.qty}`;
+        }),
+        total: t.total,
+        status: 'Pending',
+        date: new Date().toISOString(),
+        cancel_until: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString()
+      };
+
+      // Save locally
+      const orders = getOrders().filter(o => o.order_id !== orderId);
+      orders.unshift(orderPayload);
+      setOrders(orders);
+      localStorage.setItem('exora_last_order', JSON.stringify({ order_id: orderId, phone: phoneInput }));
+
+      // Send to Google Sheets
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(orderPayload)
+        });
+      } catch (err) {
+        console.error('Submit error', err);
+      }
+
+      setCart([]);
+      btn.disabled = false;
+      btn.textContent = 'Place order';
+      navigate('order-detail', orderId);
+    }
+
+    // ORDERS & TRACKING
+    function renderOrdersPage() {
+      const last = JSON.parse(localStorage.getItem('exora_last_order') || 'null');
+      if (last && last.phone) {
+        const inp = document.getElementById('lookupPhone');
+        if (inp && !inp.value) inp.value = last.phone;
+      }
+      renderOrdersList(getOrders());
+    }
+
+    function renderOrdersList(items) {
+      const grid = document.getElementById('ordersGrid');
+      if (!grid) return;
+      if (!items || !items.length) {
+        grid.innerHTML = '<div class="empty" style="grid-column:1/-1">NO ORDERS FOUND.</div>';
+        return;
+      }
+
+      grid.innerHTML = items.map(o => {
+        const status = String(o.status || 'Pending');
+        const stClass = status.toLowerCase() === 'confirmed' ? 'confirmed' : (status.toLowerCase() === 'cancelled' ? 'cancelled' : 'pending');
+        return `
+          <article class="order-card">
+            <span class="status ${stClass}">${status}</span>
+            <h3>${o.order_id}</h3>
+            <p>${o.items || 'Items detail inside.'}<br>Total: <b>${money(o.total)}</b><br>${fmtDate(o.date)}</p>
+            <div class="order-actions">
+              <button class="btn gold" onclick="navigate('order-detail', '${o.order_id}')">View order →</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    async function lookupOrders() {
+      const phone = document.getElementById('lookupPhone').value.trim();
+      if (!phone) {
+        alert('Enter your phone number.');
+        return;
+      }
+
+      const cPhone = cleanPhone(phone);
+      try {
+        const r = await fetch(`${SCRIPT_URL}?action=my_orders&phone=${encodeURIComponent(cPhone)}`);
+        const d = await r.json();
+        if (d && d.success && Array.isArray(d.orders) && d.orders.length) {
+          renderOrdersList(d.orders);
+          return;
+        }
+      } catch (e) {}
+
+      const local = getOrders().filter(o => cleanPhone(o.phone) === cPhone);
+      renderOrdersList(local);
+    }
+
+    async function loadAndRenderOrderDetail(orderId) {
+      const root = document.getElementById('orderRoot');
+      root.innerHTML = '<div class="notice">Loading order details…</div>';
+
+      let o = getOrders().find(x => x.order_id === orderId);
+
+      if (o && o.phone) {
+        try {
+          const cPhone = cleanPhone(o.phone);
+          const r = await fetch(`${SCRIPT_URL}?action=track&order_id=${encodeURIComponent(orderId)}&phone=${encodeURIComponent(cPhone)}`);
+          const d = await r.json();
+          if (d && d.success && d.order) o = { ...o, ...d.order };
+        } catch (e) {}
+      }
+
+      if (!o) o = { order_id: orderId, status: 'Not found', items: 'No record found.' };
+
+      const status = String(o.status || 'Pending');
+      const canCancel = status.toLowerCase() === 'pending' && (!o.cancel_until || new Date(o.cancel_until).getTime() > Date.now());
+
+      root.innerHTML = `
+        <div class="eyebrow">05 / ORDER DETAILS</div>
+        <h1 class="page-title">${o.order_id}</h1>
+        <div class="order-card" style="margin-top:25px;max-width:850px">
+          <span class="status ${status.toLowerCase() === 'confirmed' ? 'confirmed' : (status.toLowerCase() === 'cancelled' ? 'cancelled' : 'pending')}">${status}</span>
+          <h3>Order summary</h3>
+          <p>${o.items || ''}</p>
+          <div class="line"><span>Total</span><b>${money(o.total)}</b></div>
+          <div class="line"><span>Phone</span><span>${o.phone || ''}</span></div>
+          <div class="line"><span>Payment</span><span>${o.payment || ''}</span></div>
+          <div class="line"><span>Ordered</span><span>${fmtDate(o.date)}</span></div>
+          ${o.cancel_until ? `<div class="notice" style="margin-top:12px">Cancellation available until ${fmtDate(o.cancel_until)}</div>` : ''}
+          <div class="order-actions" style="margin-top:20px">
+            ${canCancel ? `<button class="btn dark" onclick="cancelOrder('${o.order_id}', '${o.phone}')">Cancel order</button>` : ''}
+            <button class="btn gold" onclick="navigate('orders')">Back to my orders</button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function cancelOrder(orderId, phone) {
+      if (!confirm('Are you sure you want to cancel this order?')) return;
+      const cPhone = cleanPhone(phone);
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'cancel', order_id: orderId, phone: cPhone })
+        });
+      } catch (e) {}
+
+      const local = getOrders().map(o => o.order_id === orderId ? { ...o, status: 'Cancelled' } : o);
+      setOrders(local);
+      loadAndRenderOrderDetail(orderId);
+    }
+
+    function fmtDate(d) {
+      try { return new Date(d).toLocaleString('en-BD', { dateStyle: 'medium', timeStyle: 'short' }); }
+      catch { return d || ''; }
+    }
+
+    function searchProducts(q) {
+      const box = document.getElementById('searchResults');
+      const term = q.trim().toLowerCase();
+      if (!term) { box.innerHTML = ''; return; }
+      const matches = PRODUCTS.filter(p => p.name.toLowerCase().includes(term) || p.variants.some(v => v.name.toLowerCase().includes(term)));
+      box.innerHTML = matches.length
+        ? matches.map(p => `
+            <a onclick="closeSearch(); navigate('product', '${p.id}')" style="display:block;padding:12px 0;border-bottom:1px solid #292929;cursor:pointer">
+              ${p.name} · ${p.variants.map(v => v.name).join(', ')}
+            </a>
+          `).join('')
+        : '<div class="notice">No matching products found.</div>';
+    }
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      updateBagCount();
+      navigate('home');
+    });
+  </script>
+</body>
+        </html>
