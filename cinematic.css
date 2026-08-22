@@ -1,0 +1,5 @@
+
+/* V5 cinematic-only layer: visual depth without a WebGL dependency. */
+.cinematic-surface{perspective:1200px}
+.hero .depth-ring,.hero .depth-orb{transform-style:preserve-3d}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 48%,transparent 0 35%,rgba(0,0,0,.34) 100%);z-index:1}
